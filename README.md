@@ -22,3 +22,6 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+Tên của hàm trong controller phải trùng tên với file view
+<%  %> thực thi mã bên trong
+<%= %> thực thi mã bên trong và insert dữ liệu vào file html.erb
