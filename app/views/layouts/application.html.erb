@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-     <title><%= yield(:title) %> | Ruby on Rails Tutorial Sample App
+    <%# hàm full_title được định nghĩa ở file application_helper %>
+     <title><%= full_title(yield(:title)) %> 
      </title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
