@@ -46,3 +46,6 @@ Như vậy đường dẫn sẽ là "helf_path"
 Như vậy đường dẫn sẽ là "static_pages_help_url"
 
 *Chú ý khi tạo mới 1 đối tượng và gán thì cần phải user.save
+
+*Đánh index cho cột : "rails generate migration add_index_to_users_email" sau đó gọi "rails db:migrate
+" để thay đổi
