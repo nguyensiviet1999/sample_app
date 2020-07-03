@@ -49,3 +49,4 @@ Như vậy đường dẫn sẽ là "static_pages_help_url"
 
 *Đánh index cho cột : "rails generate migration add_index_to_users_email" sau đó gọi "rails db:migrate
 " để thay đổi
+* Dùng rails db:seed để tạo dữ liệu tự động

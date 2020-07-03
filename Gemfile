@@ -27,6 +27,9 @@ gem "jbuilder", "~> 2.7"
 # gem 'image_processing', '~> 1.2'
 gem "uglifier"
 gem "coffee-rails"
+gem "faker"
+gem "will_paginate"
+gem "bootstrap-will_paginate"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.4.2", require: false
 
