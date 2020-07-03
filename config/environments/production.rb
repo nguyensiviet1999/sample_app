@@ -89,17 +89,18 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
   config.action_mailer.delivery_method = :smtp
-  host = "https://viet-sample-app.herokuapp.com" #replace with your own url
+  host = "viet-sample-app.herokuapp.com" #replace with your own url
   config.action_mailer.default_url_options = { host: host }
 
   # SMTP settings for gmail
 
   config.action_mailer.smtp_settings = {
-    :address => "smtp.gmail.com",
+    :address => "smtp.sendgrid.net",
     :port => 587,
     :user_name => "nguyensiviet1999@gmail.com",
-    :password => "0313981652",
+    :password => "a0368136928",
     :authentication => "plain",
+    :domain => "viet-sample-app.herokuapp.com",
     :enable_starttls_auto => true,
   }
   # Inserts middleware to perform automatic connection switching.

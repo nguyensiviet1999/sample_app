@@ -1,23 +1,21 @@
+require "sendgrid-ruby"
+
 class UserMailer < ApplicationMailer
+  def account_activation(user, subject = "Activation Mail", content_value = "")
+    from = SendGrid::Email.new(email: "emres@framgia.com")
+    to = SendGrid::Email.new(email: user.email)
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.user_mailer.account_activation.subject
-  #
-  def account_activation(user)
-    @user = user
-    mail(to: user.email, subject: "Account activation")
-  end
+    #TODO setting content full later
+    content = SendGrid::Content.new(type: "text/plain", value: content_value)
+    mail = SendGrid::Mail.new(from, subject, to, content)
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.user_mailer.password_reset.subject
-  #
-  def password_reset
-    @greeting = "Hi"
+    unless Rails.env.production?
+      mail_settings = SendGrid::MailSettings.new
+      mail_settings.sandbox_mode = SendGrid::SandBoxMode.new(enable: true)
+      mail.mail_settings = mail_settings
+    end
 
-    mail to: "to@example.org"
+    sg = SendGrid::API.new(api_key: "B3lQvyryQFqfk2hh_SSnvw")
+    response = sg.client.mail._("send").post(request_body: mail.to_json)
   end
 end
