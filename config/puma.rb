@@ -33,6 +33,25 @@ pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 # process behavior so workers use less memory.
 #
 # preload_app!
+preload_app!
 
+rackup DefaultRackup
+on_worker_boot do
+  ActiveRecord::Base.establish_connection
+end
+if ENV["RAILS_ENV"] == "development"
+  key_file = Rails.root.join("config", "certs", "localhost-key.pem")
+  cert_file = Rails.root.join("config", "certs", "localhost.pem")
+
+  if key_file.exist?
+    ssl_bind "0.0.0.0", "3000", {
+               key: "config/certs/localhost-key.pem",
+               cert: "config/certs/server.crt",
+               verify_mode: "none",
+             }
+  else
+    bind "tcp://0.0.0.0:3000"
+  end
+end
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
