@@ -94,14 +94,14 @@ Rails.application.configure do
 
   # SMTP settings for gmail
 
+  config.action_mailer.default_options = { from: "no-reply@example.com" }
   config.action_mailer.smtp_settings = {
-    :address => "smtp.sendgrid.net",
-    :port => 587,
-    :user_name => "nguyensiviet1999@gmail.com",
-    :password => "a0368136928",
-    :authentication => "plain",
-    :domain => "viet-sample-app.herokuapp.com",
-    :enable_starttls_auto => true,
+    address: "smtp.gmail.com",
+    port: 587,
+    user_name: "autoname1999@gmail.com",
+    password: "ilcimepnohpudqqo",
+    authentication: "plain",
+    enable_starttls_auto: true,
   }
   # Inserts middleware to perform automatic connection switching.
   # The `database_selector` hash is used to pass options to the DatabaseSelector
