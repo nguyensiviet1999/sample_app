@@ -9,7 +9,7 @@ class UserMailer < ApplicationMailer
 
   def account_activation(user)
     @user = user
-    @url = "http://localhost:3000/login"
+    @url = "viet-sample-app.herokuapp.com/login"
     mail to: user.email, subject: "Account activation"
   end
 
