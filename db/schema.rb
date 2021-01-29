@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_08_042925) do
-
+ActiveRecord::Schema.define(version: 2021_01_29_042600) do
   create_table "comments", force: :cascade do |t|
     t.text "content"
     t.integer "user_id", null: false
@@ -56,6 +55,9 @@ ActiveRecord::Schema.define(version: 2020_07_08_042925) do
     t.datetime "activated_at"
     t.string "reset_digest"
     t.datetime "reset_sent_at"
+    t.string "provider"
+    t.string "uid"
+    t.string "image"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
