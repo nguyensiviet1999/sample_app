@@ -25,6 +25,8 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_blank: true
   devise :omniauthable, omniauth_providers: [:facebook, :google_oauth2]
+  mount_uploader :avatar, PictureUploader
+
   def self.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ?
       BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
@@ -35,7 +37,7 @@ class User < ApplicationRecord
   end
   def self.from_omniauth(access_token)
     data = access_token.info
-    user = access_token.uid.nil? ? User.where(uid: access_token.uid).first : User.where(email: data["email"]).first
+    user = data["email"].nil? ? User.where(uid: access_token.uid).first : User.where(email: data["email"]).first
 
     # Uncomment the section below if you want users to be created if they don't exist
     unless user
@@ -44,6 +46,7 @@ class User < ApplicationRecord
                          email: data["email"],
                          uid: access_token.uid,
                          provider: access_token.provider,
+                         remote_avatar_url: data["image"],
                          password: Devise.friendly_token[0, 20])
     end
     user

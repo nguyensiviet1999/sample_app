@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_29_042600) do
+ActiveRecord::Schema.define(version: 2021_02_01_032721) do
+
   create_table "comments", force: :cascade do |t|
     t.text "content"
     t.integer "user_id", null: false
@@ -57,7 +58,7 @@ ActiveRecord::Schema.define(version: 2021_01_29_042600) do
     t.datetime "reset_sent_at"
     t.string "provider"
     t.string "uid"
-    t.string "image"
+    t.string "avatar"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
