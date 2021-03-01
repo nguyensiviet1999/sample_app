@@ -5,6 +5,6 @@ class Provider < ApplicationRecord
   validates :uid, presence: true
   validates :name, presence: true
   mount_uploader :avatar, PictureUploader
-  scope :google, -> { where(:provider => "google_oauth2") }
-  scope :facebook, -> { where(:provider => "facebook") }
+  scope :google, -> { where(provider: "google_oauth2").first }
+  scope :facebook, -> { where(provider: "facebook").first }
 end

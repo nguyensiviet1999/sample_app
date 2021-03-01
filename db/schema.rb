@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_01_091529) do
+ActiveRecord::Schema.define(version: 2021_03_01_045939) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2021_02_01_091529) do
     t.string "uid"
     t.string "name"
     t.string "avatar"
+    t.string "avatar_url"
     t.index ["user_id"], name: "index_providers_on_user_id"
   end
 

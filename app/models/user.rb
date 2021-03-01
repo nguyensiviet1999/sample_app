@@ -46,10 +46,18 @@ class User < ApplicationRecord
                          remote_avatar_url: data["image"],
                          password: Devise.friendly_token[0, 20])
     end
-    if Provider.where(uid: access_token.uid).first.nil?
+    provider = Provider.find_by(uid: access_token.uid)
+    if provider.present?
+      if (provider.avatar_url != data["image"] || provider.name != data["name"])
+        provider.update_attributes(remote_avatar_url: data["image"],
+                                   avatar_url: data["image"],
+                                   name: data["name"])
+      end
+    else
       provider = user.providers.build(name: data["name"],
                                       uid: access_token.uid,
                                       provider: access_token.provider,
+                                      avatar_url: data["image"],
                                       remote_avatar_url: data["image"]).save
     end
     user

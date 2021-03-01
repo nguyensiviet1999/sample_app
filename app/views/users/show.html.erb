@@ -3,11 +3,11 @@
   <aside class="col-md-4">
     <section class="user_info">
       <h1>
-      <% if @user.avatar.nil? %>
-        <%= gravatar_for @user %>
-      <% else %>
-        <%= image_tag @user.avatar.url %>  
-      <% end %>
+        <% if @user.avatar.present? %>
+          <%= image_tag @user.avatar.url %>
+        <% else %>
+          <%= gravatar_for @user %>
+        <% end %>
         <%= @user.name %>
         <br>
         <%= @user.provider if @user.provider.present? %>
@@ -20,28 +20,28 @@
  <aside class="col-md-4">
     <section class="user_info">
       <h1>
-      <% if @user.providers.google.first.avatar.nil? %>
-        <%= gravatar_for @user %>
-      <% else %>
-        <%= image_tag @user.providers.google.first.avatar.url %>  
-      <% end %>
+        <% if @user.providers.google.avatar.present? %>
+          <%= image_tag @user.providers.google.avatar.url %>
+        <% else %>
+          <%= gravatar_for @user %>
+        <% end %>
         <%= @user.name %>
         <br>
-        <%= @user.providers.google.first.provider if @user.providers.google.first.provider.present? %>
+        <%= @user.providers.google.provider if @user.providers.google.provider.present? %>
       </h1>
     </section>
   </aside>
   <aside class="col-md-4">
     <section class="user_info">
       <h1>
-      <% if @user.providers.facebook.first.avatar.nil? %>
-        <%= gravatar_for @user %>
-      <% else %>
-        <%= image_tag @user.providers.facebook.first.avatar.url %>  
-      <% end %>
-        <%= @user.providers.facebook.first.name %>
+        <% if @user.providers.facebook.avatar.present? %>
+          <%= image_tag @user.providers.facebook.avatar.url %>  
+        <% else %>
+          <%= gravatar_for @user %>
+        <% end %>
+        <%= @user.providers.facebook.name %>
         <br>
-        <%= @user.providers.facebook.first.provider if @user.providers.facebook.first.provider.present? %>
+        <%= @user.providers.facebook.provider if @user.providers.facebook.provider.present? %>
       </h1>
     </section>
   </aside>
