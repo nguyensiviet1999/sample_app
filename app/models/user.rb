@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   # attr_accessor :name , :email
   has_many :microposts, dependent: :destroy
+  has_many :providers, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :active_relationships, class_name: "Relationship",
                                   foreign_key: "follower_id",
@@ -24,6 +25,9 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false }
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_blank: true
+  devise :omniauthable, omniauth_providers: [:facebook, :google_oauth2]
+  mount_uploader :avatar, PictureUploader
+
   def self.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ?
       BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
@@ -31,6 +35,32 @@ class User < ApplicationRecord
   end
   def self.new_token
     SecureRandom.urlsafe_base64
+  end
+  def self.from_omniauth(access_token)
+    data = access_token.info
+    user = data["email"].nil? ? User.where(uid: access_token.uid).first : User.where(email: data["email"]).first
+    unless user
+      user = User.create(name: data["name"],
+                         email: data["email"],
+                         uid: access_token.uid,
+                         remote_avatar_url: data["image"],
+                         password: Devise.friendly_token[0, 20])
+    end
+    provider = Provider.find_by(uid: access_token.uid)
+    if provider.present?
+      if (provider.avatar_url != data["image"] || provider.name != data["name"])
+        provider.update_attributes(remote_avatar_url: data["image"],
+                                   avatar_url: data["image"],
+                                   name: data["name"])
+      end
+    else
+      provider = user.providers.build(name: data["name"],
+                                      uid: access_token.uid,
+                                      provider: access_token.provider,
+                                      avatar_url: data["image"],
+                                      remote_avatar_url: data["image"]).save
+    end
+    user
   end
 
   def remember
