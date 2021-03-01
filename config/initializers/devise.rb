@@ -21,8 +21,8 @@ Devise.setup do |config|
                   info_fields: "id, name, first_name, middle_name, last_name, age_range, link, gender, locale, timezone, updated_time, verified, email, birthday, location",
                   token_params: { parse: :json },
                   client_options: {
-                    site: "https://graph.facebook.com/v9.0",
-                    authorize_url: "https://www.facebook.com/v9.0/dialog/oauth",
+                    site: "https://graph.facebook.com/v10.0",
+                    authorize_url: "https://www.facebook.com/v10.0/dialog/oauth",
                   }
   OmniAuth.config.request_validation_phase
   # ==> Controller configuration

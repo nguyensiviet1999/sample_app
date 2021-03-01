@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_01_032721) do
+ActiveRecord::Schema.define(version: 2021_02_01_091529) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
@@ -31,6 +31,15 @@ ActiveRecord::Schema.define(version: 2021_02_01_032721) do
     t.string "picture"
     t.index ["user_id", "created_at"], name: "index_microposts_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_microposts_on_user_id"
+  end
+
+  create_table "providers", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "provider"
+    t.string "uid"
+    t.string "name"
+    t.string "avatar"
+    t.index ["user_id"], name: "index_providers_on_user_id"
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -65,4 +74,5 @@ ActiveRecord::Schema.define(version: 2021_02_01_032721) do
   add_foreign_key "comments", "microposts"
   add_foreign_key "comments", "users"
   add_foreign_key "microposts", "users"
+  add_foreign_key "providers", "users"
 end

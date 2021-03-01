@@ -45,6 +45,8 @@ gem "omniauth-facebook"
 gem "figaro"
 gem "omniauth-rails_csrf_protection"
 gem "rubocop"
+gem "rubocop-faker"
+gem "rmagick", :require => "RMagick"
 group :development, :test do
   gem "sqlite3", "~> 1.4"
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

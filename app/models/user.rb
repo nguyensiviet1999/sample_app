@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   # attr_accessor :name , :email
   has_many :microposts, dependent: :destroy
+  has_many :providers, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :active_relationships, class_name: "Relationship",
                                   foreign_key: "follower_id",
@@ -38,16 +39,18 @@ class User < ApplicationRecord
   def self.from_omniauth(access_token)
     data = access_token.info
     user = data["email"].nil? ? User.where(uid: access_token.uid).first : User.where(email: data["email"]).first
-
-    # Uncomment the section below if you want users to be created if they don't exist
     unless user
-      data["email"] = "#{access_token.uid}@facebook.com" if data["email"].nil?
       user = User.create(name: data["name"],
                          email: data["email"],
                          uid: access_token.uid,
-                         provider: access_token.provider,
                          remote_avatar_url: data["image"],
                          password: Devise.friendly_token[0, 20])
+    end
+    if Provider.where(uid: access_token.uid).first.nil?
+      provider = user.providers.build(name: data["name"],
+                                      uid: access_token.uid,
+                                      provider: access_token.provider,
+                                      remote_avatar_url: data["image"]).save
     end
     user
   end
