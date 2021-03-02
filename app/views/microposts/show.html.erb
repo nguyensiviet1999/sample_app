@@ -15,15 +15,38 @@
 </div>
 <div>
   <h2>Comments</h2>
-  <ul class="comments">
+  <div class="comments">
     <%= render @comments %>
-  </ul>
+  </div>
   <%= form_for(@comment,html: { multipart: true , remote: true }) do |f| %>
     <%= render 'shared/error_messages', object: f.object %>
     <div><%= hidden_field_tag "comment[micropost_id]", @micropost.id %></div>
-    <div class="field">
-      <%= f.text_area :content, placeholder: "Compose new micropost..." %>
+    <div class="field row">
+      <div class="col-sm-10">
+        <%= f.text_area :content, placeholder: "Compose new micropost..." %>
+      </div>
+      <div class="col-sm-2">
+        <%= f.submit "Post", class: "btn btn-primary" %>
+      </div>
     </div>
-    <%= f.submit "Post", class: "btn btn-primary" %>
   <% end %>
 </div>
+<script>
+  $('body').on("click",".reaction-comment",function(){
+    var collapse_target_id = $(this).parent().attr('id')
+    var comment_target_href = "[href='#" + $(this).parent().attr('id') + "']"
+    $(comment_target_href).children('.fa-thumbs-up').replaceWith("");
+    var count_reaction = parseInt($(comment_target_href).children("sub").text())
+    if($(this).data('control')=="on"){
+      $(this).data('control','off')
+      $(comment_target_href).children("[data='"+$(this).children().text()+"']").removeAttr('hidden')
+      $(comment_target_href).children("sub").html(count_reaction + 1)
+    }
+    else{
+      $(this).data('control','on')
+      $(comment_target_href).children("[data='"+$(this).children().text()+"']").attr('hidden','hidden')
+      $(comment_target_href).children("sub").html(count_reaction - 1)
+    }
+    $('#' + collapse_target_id).collapse('hide')
+  });
+</script>
