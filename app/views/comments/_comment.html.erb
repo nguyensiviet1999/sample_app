@@ -17,7 +17,7 @@
         <span hidden="hidden" data="😢" style="margin-left: -12px;">😢</span>
         <span hidden="hidden" data="😡" style="margin-left: -12px;">😡</span>
         <span hidden="hidden" data="😱" style="margin-left: -12px;">😱</span>
-        <sub>1</sub>
+        <sub>0</sub>
       </a>
       <a class="btn " data-toggle="collapse" href="#collapseComment<%=comment.id%>" role="button" aria-expanded="false" aria-controls="collapseComment">
         comment
@@ -33,8 +33,23 @@
       </div>
       <div class="collapse" id="collapseComment<%=comment.id%>">
         <ul class="comments">
-          <%= render comment.children_comments %>
+          <%= render comment.children_comments if comment.children_comments.present?%> 
         </ul>
+        <ul>
+          <%= form_for(Comment.new(), html: {method: 'post', multipart: true , remote: true }) do |f| %>
+            <%= render 'shared/error_messages', object: f.object %>
+            <div><%= hidden_field_tag "comment[micropost_id]", comment.micropost.id %></div>
+            <div><%= hidden_field_tag "comment[parent_comment_id]", comment.id %></div>
+            <div class="field row">
+              <div class="col-sm-10">
+                <%= f.text_area :content, placeholder: "Compose new micropost...", id: "comment#{comment.id}_content" %>
+              </div>
+              <div class="col-sm-2">
+                <%= f.submit "Post", class: "btn btn-primary" %>
+              </div>
+            </div>
+          <% end %>
+        </ul> 
       </div>
     <% end %>
   <% end %>

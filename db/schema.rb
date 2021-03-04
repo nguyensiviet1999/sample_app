@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_01_045939) do
+ActiveRecord::Schema.define(version: 2021_03_03_085013) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
@@ -18,21 +18,14 @@ ActiveRecord::Schema.define(version: 2021_03_01_045939) do
     t.integer "micropost_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "parent_comment_id"
     t.index ["micropost_id"], name: "index_comments_on_micropost_id"
     t.index ["user_id", "micropost_id", "created_at"], name: "index_comments_on_user_id_and_micropost_id_and_created_at"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "devise_users", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["email"], name: "index_devise_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_devise_users_on_reset_password_token", unique: true
+  create_table "emojis", force: :cascade do |t|
+    t.string "emoji_image"
   end
 
   create_table "microposts", force: :cascade do |t|
@@ -53,6 +46,24 @@ ActiveRecord::Schema.define(version: 2021_03_01_045939) do
     t.string "avatar"
     t.string "avatar_url"
     t.index ["user_id"], name: "index_providers_on_user_id"
+  end
+
+  create_table "reaction_comments", force: :cascade do |t|
+    t.integer "comment_id", null: false
+    t.integer "user_id", null: false
+    t.integer "emoji_id", null: false
+    t.index ["comment_id"], name: "index_reaction_comments_on_comment_id"
+    t.index ["emoji_id"], name: "index_reaction_comments_on_emoji_id"
+    t.index ["user_id"], name: "index_reaction_comments_on_user_id"
+  end
+
+  create_table "reaction_posts", force: :cascade do |t|
+    t.integer "micropost_id", null: false
+    t.integer "user_id", null: false
+    t.integer "emoji_id", null: false
+    t.index ["emoji_id"], name: "index_reaction_posts_on_emoji_id"
+    t.index ["micropost_id"], name: "index_reaction_posts_on_micropost_id"
+    t.index ["user_id"], name: "index_reaction_posts_on_user_id"
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -88,4 +99,10 @@ ActiveRecord::Schema.define(version: 2021_03_01_045939) do
   add_foreign_key "comments", "users"
   add_foreign_key "microposts", "users"
   add_foreign_key "providers", "users"
+  add_foreign_key "reaction_comments", "comments"
+  add_foreign_key "reaction_comments", "emojis"
+  add_foreign_key "reaction_comments", "users"
+  add_foreign_key "reaction_posts", "emojis"
+  add_foreign_key "reaction_posts", "microposts"
+  add_foreign_key "reaction_posts", "users"
 end

@@ -6,6 +6,7 @@ class CommentsController < ApplicationController
 
   def create
     @micropost = Micropost.find(params[:comment][:micropost_id])
+    @parent_comment_id = params[:comment][:parent_comment_id]
     @comment = current_user.comments.build(comment_params)
     if @comment.save
       #ajax
@@ -36,7 +37,7 @@ class CommentsController < ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:content, :micropost_id)
+    params.require(:comment).permit(:content, :micropost_id, :parent_comment_id)
   end
 
   def correct_user
