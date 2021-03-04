@@ -16,6 +16,14 @@ Devise.setup do |config|
   # by default. You can change it below and use your own secret key.
   # config.secret_key = '36fcc797129463fead0aba2218540ab9f416761efcce79b72b30a91827aa98f98c5faeb32035c2309244e027ccd6d918c285c56365e63e17f10489f0aee78dcf'
   config.omniauth :google_oauth2, ENV["GOOGLE_OAUTH_CLIENT_ID"], ENV["GOOGLE_OAUTH_CLIENT_SECRET"]
+  config.omniauth :facebook, ENV["FACEBOOK_OAUTH_CLIENT_ID"], ENV["FACEBOOK_OAUTH_CLIENT_SECRET"],
+                  scope: "email,user_likes, user_birthday, public_profile, user_birthday, user_location",
+                  info_fields: "id, name, first_name, middle_name, last_name, age_range, link, gender, locale, timezone, updated_time, verified, email, birthday, location",
+                  token_params: { parse: :json },
+                  client_options: {
+                    site: "https://graph.facebook.com/v10.0",
+                    authorize_url: "https://www.facebook.com/v10.0/dialog/oauth",
+                  }
   OmniAuth.config.request_validation_phase
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.

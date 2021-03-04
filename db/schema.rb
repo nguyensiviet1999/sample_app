@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_28_080206) do
+ActiveRecord::Schema.define(version: 2021_03_01_045939) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
@@ -45,6 +45,16 @@ ActiveRecord::Schema.define(version: 2021_01_28_080206) do
     t.index ["user_id"], name: "index_microposts_on_user_id"
   end
 
+  create_table "providers", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "provider"
+    t.string "uid"
+    t.string "name"
+    t.string "avatar"
+    t.string "avatar_url"
+    t.index ["user_id"], name: "index_providers_on_user_id"
+  end
+
   create_table "relationships", force: :cascade do |t|
     t.integer "follower_id"
     t.integer "followed_id"
@@ -68,10 +78,14 @@ ActiveRecord::Schema.define(version: 2021_01_28_080206) do
     t.datetime "activated_at"
     t.string "reset_digest"
     t.datetime "reset_sent_at"
+    t.string "provider"
+    t.string "uid"
+    t.string "avatar"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
   add_foreign_key "comments", "microposts"
   add_foreign_key "comments", "users"
   add_foreign_key "microposts", "users"
+  add_foreign_key "providers", "users"
 end
