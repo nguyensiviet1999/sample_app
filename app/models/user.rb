@@ -54,11 +54,11 @@ class User < ApplicationRecord
                                    name: data["name"])
       end
     else
-      provider = user.providers.build(name: data["name"],
-                                      uid: access_token.uid,
-                                      provider: access_token.provider,
-                                      avatar_url: data["image"],
-                                      remote_avatar_url: data["image"]).save
+      user.providers.build(name: data["name"],
+                           uid: access_token.uid,
+                           provider: access_token.provider,
+                           avatar_url: data["image"],
+                           remote_avatar_url: data["image"]).save
     end
     user
   end
@@ -77,17 +77,6 @@ class User < ApplicationRecord
 
   def forget
     update_attribute(:remember_digest, nil)
-  end
-
-  # Converts email to all lowercase.
-  def downcase_email
-    self.email = email.downcase
-  end
-
-  # Creates and assigns the activation token and digest.
-  def create_activation_digest
-    self.activation_token = User.new_token
-    self.activation_digest = User.digest(activation_token)
   end
 
   # Activates an account.
