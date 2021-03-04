@@ -1,3 +1,2 @@
-$("#collapseComment<%=@parent_comment_id%>").children(".comments").append("<%= escape_javascript(render('comments/comment',:comment => @comment)) %>"); 
+$("#collapse_comment<%=@parent_comment_id%>").children(".comments").append("<%= escape_javascript(render('comments/comment',:comment => @comment)) %>"); 
 $('#comment<%="#{@parent_comment_id}"%>_content').val("");
-console.log('#comment<%="#{@parent_comment_id}"%>_content')

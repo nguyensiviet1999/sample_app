@@ -9,7 +9,7 @@
       Posted <%= time_ago_in_words(comment.created_at) %> ago.
     </div>
     <% if current_user?(comment.user) %>
-      <a class="btn " data-toggle="collapse" href="#collapseReactionComment<%=comment.id%>" role="button" aria-expanded="false" aria-controls="collapseReactionComment">
+      <a class="btn " data-toggle="collapse" href="#collapse_reaction_comment<%=comment.id%>" role="button" aria-expanded="false" aria-controls="collapse_reaction_comment">
         <i class="far fa-thumbs-up"></i>
         <span hidden="hidden" data="👍" style="margin-left: -12px;">👍</span>
         <span hidden="hidden" data="🥰" style="margin-left: -12px;">🥰</span>
@@ -19,11 +19,11 @@
         <span hidden="hidden" data="😱" style="margin-left: -12px;">😱</span>
         <sub>0</sub>
       </a>
-      <a class="btn " data-toggle="collapse" href="#collapseComment<%=comment.id%>" role="button" aria-expanded="false" aria-controls="collapseComment">
+      <a class="btn " data-toggle="collapse" href="#collapse_comment<%=comment.id%>" role="button" aria-expanded="false" aria-controls="collapse_comment">
         comment
       </a>
       <%= link_to "delete", comment, method: :delete, data: { confirm: "You sure?" }, remote: true %>
-      <div class="collapse" id="collapseReactionComment<%=comment.id%>">
+      <div class="collapse" id="collapse_reaction_comment<%=comment.id%>">
         <a class="btn reaction-comment" data-control="on"><span>👍</span></a>
         <a class="btn reaction-comment" data-control="on"><span>🥰</span></a>
         <a class="btn reaction-comment" data-control="on"><span>😆</span></a>
@@ -31,7 +31,7 @@
         <a class="btn reaction-comment" data-control="on"><span>😡</span></a>
         <a class="btn reaction-comment" data-control="on"><span>😱</span></a>
       </div>
-      <div class="collapse" id="collapseComment<%=comment.id%>">
+      <div class="collapse" id="collapse_comment<%=comment.id%>">
         <ul class="comments">
           <%= render comment.children_comments if comment.children_comments.present?%> 
         </ul>
