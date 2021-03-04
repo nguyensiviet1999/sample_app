@@ -1,43 +1,43 @@
 <div id="comment-<%= comment.id %>">
   <% if !comment.user.nil? %>
-    <%= link_to gravatar_for(comment.user, size: 50), comment.user%>
-    <div class="user"><%= link_to comment.user.name, comment.user%></div>
+    <%= link_to gravatar_for(comment.user, size: 50), comment.user %>
+    <div class="user"><%= link_to comment.user.name, comment.user %></div>
     <div class="content">
       <%= comment.content %>
     </div>
     <div class="timestamp">
       Posted <%= time_ago_in_words(comment.created_at) %> ago.
     </div>
-    <% if current_user?(comment.user) %>
-      <a class="btn " data-toggle="collapse" href="#collapse_reaction_comment<%=comment.id%>" role="button" aria-expanded="false" aria-controls="collapse_reaction_comment">
-        <i class="far fa-thumbs-up"></i>
-        <span hidden="hidden" data="👍" style="margin-left: -12px;">👍</span>
-        <span hidden="hidden" data="🥰" style="margin-left: -12px;">🥰</span>
-        <span hidden="hidden" data="😆" style="margin-left: -12px;">😆</span>
-        <span hidden="hidden" data="😢" style="margin-left: -12px;">😢</span>
-        <span hidden="hidden" data="😡" style="margin-left: -12px;">😡</span>
-        <span hidden="hidden" data="😱" style="margin-left: -12px;">😱</span>
-        <sub>0</sub>
+    <% if current_user.present? %>
+      <a class="btn " data-toggle="collapse" href="#collapse_reaction_comment<%= comment.id %>" role="button" aria-expanded="false" aria-controls="collapse_reaction_comment">
+        <% if comment.reaction_comments.length() == 0 %>
+          <i class="far fa-thumbs-up"></i> 
+        <% end %>
+        <span  id="reaction_comment<%= comment.id %>">
+          <% comment.emojis.each do |emoji| %>
+            <%= emoji.emoji_image %>
+          <% end %>
+        </span>
+        <sub> <%= comment.reaction_comments.length() %></sub>
       </a>
-      <a class="btn " data-toggle="collapse" href="#collapse_comment<%=comment.id%>" role="button" aria-expanded="false" aria-controls="collapse_comment">
+      <a class="btn " data-toggle="collapse" href="#collapse_comment<%= comment.id %>" role="button" aria-expanded="false" aria-controls="collapse_comment">
         comment
       </a>
-      <%= link_to "delete", comment, method: :delete, data: { confirm: "You sure?" }, remote: true %>
-      <div class="collapse" id="collapse_reaction_comment<%=comment.id%>">
-        <a class="btn reaction-comment" data-control="on"><span>👍</span></a>
-        <a class="btn reaction-comment" data-control="on"><span>🥰</span></a>
-        <a class="btn reaction-comment" data-control="on"><span>😆</span></a>
-        <a class="btn reaction-comment" data-control="on"><span>😢</span></a>
-        <a class="btn reaction-comment" data-control="on"><span>😡</span></a>
-        <a class="btn reaction-comment" data-control="on"><span>😱</span></a>
+      <% if current_user?(comment.user) %>
+        <%= link_to "delete", comment, method: :delete, data: { confirm: "You sure?" }, remote: true %>
+      <% end %>
+      <div class="collapse" id="collapse_reaction_comment<%= comment.id %>">
+        <% @emojis.each do |emoji| %>
+          <a class="btn reaction-comment" data-control="on" data-emoji_id=<%= emoji.id %> data-comment_id=<%= comment.id %>><span><%= emoji.emoji_image %></span></a>
+        <% end %>
       </div>
-      <div class="collapse" id="collapse_comment<%=comment.id%>">
+      <div class="collapse" id="collapse_comment<%= comment.id %>" >
         <ul class="comments">
-          <%= render comment.children_comments if comment.children_comments.present?%> 
+          <%= render comment.children_comments if comment.children_comments.present? %> 
         </ul>
         <ul>
-          <%= form_for(Comment.new(), html: {method: 'post', multipart: true , remote: true }) do |f| %>
-            <%= render 'shared/error_messages', object: f.object %>
+          <%= form_for(Comment.new(), html: { method: "post", multipart: true, remote: true }) do |f| %>
+            <%= render "shared/error_messages", object: f.object %>
             <div><%= hidden_field_tag "comment[micropost_id]", comment.micropost.id %></div>
             <div><%= hidden_field_tag "comment[parent_comment_id]", comment.id %></div>
             <div class="field row">
