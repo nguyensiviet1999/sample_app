@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_many :microposts, dependent: :destroy
   has_many :providers, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :reaction_comments, dependent: :destroy
   has_many :active_relationships, class_name: "Relationship",
                                   foreign_key: "follower_id",
                                   dependent: :destroy
@@ -17,7 +18,7 @@ class User < ApplicationRecord
   before_save :downcase_email
   before_create :create_activation_digest
   before_save { self.email = email.downcase }
-  validates :name, presence: true, length: { maximum: 50 } #validates(:name, presence: true)
+  validates :name, presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
   validates :email, presence: true,
                     length: { maximum: 255 },
@@ -33,9 +34,11 @@ class User < ApplicationRecord
       BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
   end
+
   def self.new_token
     SecureRandom.urlsafe_base64
   end
+
   def self.from_omniauth(access_token)
     data = access_token.info
     user = data["email"].nil? ? User.where(uid: access_token.uid).first : User.where(email: data["email"]).first
@@ -48,7 +51,7 @@ class User < ApplicationRecord
     end
     provider = Provider.find_by(uid: access_token.uid)
     if provider.present?
-      if (provider.avatar_url != data["image"] || provider.name != data["name"])
+      if provider.avatar_url != data["image"] || provider.name != data["name"]
         provider.update_attributes(remote_avatar_url: data["image"],
                                    avatar_url: data["image"],
                                    name: data["name"])
@@ -143,5 +146,3 @@ class User < ApplicationRecord
     self.activation_digest = User.digest(activation_token)
   end
 end
-
-# User.create(name: "Example User",email: "example@railstutorial.org", password: "foobar", password_confirmation: "foobar")

@@ -1,0 +1,4 @@
+<%= form_for(@emoji, html: { multipart: true, method: "POST" }) do |f| %>
+<%= f.text_area :emoji_image %>
+<%= f.submit "create", class: "btn btn-primary" %>
+<% end %>

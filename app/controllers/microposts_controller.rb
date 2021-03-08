@@ -6,6 +6,7 @@ class MicropostsController < ApplicationController
     @micropost = Micropost.find(params[:id])
     @comments = @micropost.comments.first_level
     @comment = @micropost.comments.build
+    @emojis = Emoji.all
   end
 
   def create
