@@ -7,6 +7,7 @@ $('body').on("click",".reaction-comment",function(){
       "emoji_id": emoji_id
     }
   }
+  url = $(`#collapse_reaction_comment${comment_id}`).data("reaction-comment-url")
   var collapse_target_id = $(this).parent().attr('id')
   var comment_target_href = `[href='#${$(this).parent().attr('id')}']`
   $(comment_target_href).children('.fa-thumbs-up').attr('hidden','hidden')
@@ -16,7 +17,7 @@ $('body').on("click",".reaction-comment",function(){
   const token = document.getElementsByName("csrf-token")[0].content;
   $.ajax({
     type: "post",
-    url: "../reaction_comments",
+    url: url,
     data: reaction_data,
     dataType: "json",
     success: function (response) {

@@ -14,7 +14,7 @@
           <i class="far fa-thumbs-up"></i> 
         <% end %>
         <span  id="reaction_comment<%= comment.id %>">
-          <% comment.emojis.each do |emoji| %>
+          <% comment.emojis.uniq.each do |emoji| %>
             <%= emoji.emoji_image %>
           <% end %>
         </span>
@@ -26,7 +26,7 @@
       <% if current_user?(comment.user) %>
         <%= link_to "delete", comment, method: :delete, data: { confirm: "You sure?" }, remote: true %>
       <% end %>
-      <div class="collapse" id="collapse_reaction_comment<%= comment.id %>">
+      <div class="collapse" id="collapse_reaction_comment<%= comment.id %>" data-reaction-comment-url=<%= reaction_comments_path %>>
         <% @emojis.each do |emoji| %>
           <a class="btn reaction-comment" data-control="on" data-emoji_id=<%= emoji.id %> data-comment_id=<%= comment.id %>><span><%= emoji.emoji_image %></span></a>
         <% end %>

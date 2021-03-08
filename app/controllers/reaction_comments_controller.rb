@@ -14,10 +14,10 @@ class ReactionCommentsController < ApplicationController
     end
     comment = Comment.find(reaction_comments_params["comment_id"])
     render json: {
-                  comment_emojis: comment.emojis.map(&:emoji_image),
-                  reaction_comment_count: comment.reaction_comments.length,
-                  user_reaction_comment_emoji: reaction_comment&.emoji_id
-                }
+                    comment_emojis: comment.emojis.map(&:emoji_image).uniq,
+                    reaction_comment_count: comment.reaction_comments.length,
+                    user_reaction_comment_emoji: reaction_comment&.emoji_id
+                  }
   end
 
   private
