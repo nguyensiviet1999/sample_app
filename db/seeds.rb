@@ -38,3 +38,6 @@ following.each { |followed| user.follow(followed) }
 followers.each { |follower| follower.follow(user) }
 #check rubocop
 #bundle exec rubocop --require rubocop-faker --only Faker/DeprecatedArguments --auto-correct
+["😀", "😃", "😄", "😁", "😆", "😅"].each do |item|
+  Emoji.create!(emoji_image: item)
+end

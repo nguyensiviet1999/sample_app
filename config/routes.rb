@@ -24,6 +24,6 @@ Rails.application.routes.draw do
   resources :microposts, only: [:show, :create, :destroy]
   resources :relationships, only: [:create, :destroy]
   resources :comments, only: [:show, :create, :destroy]
-  resources :emojis, only: [:new, :show, :create]
+  resources :emojis, only: [:new, :create]
   resources :reaction_comments, only: [:create, :destroy]
 end
