@@ -11,7 +11,7 @@ threads min_threads_count, max_threads_count
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 #
-port ENV.fetch("PORT") { 3000 }
+port ENV.fetch("PORT") { 80 }
 
 # Specifies the `environment` that Puma will run in.
 #
@@ -48,13 +48,13 @@ if ENV["RAILS_ENV"] == "production"
   cert_file = Rails.root.join("config", "certs", "localhost.pem")
 
   if key_file.exist?
-    ssl_bind "0.0.0.0", "3000", {
+    ssl_bind "65.2.40.39", "443", {
                key: "config/certs/localhost-key.pem",
                cert: "config/certs/server.crt",
                verify_mode: "none",
              }
   else
-    bind "tcp://0.0.0.0:3000"
+    bind "tcp://65.2.40.39/:443"
   end
 end
 # Allow puma to be restarted by `rails restart` command.
