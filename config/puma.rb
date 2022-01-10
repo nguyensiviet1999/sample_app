@@ -17,7 +17,6 @@ port ENV.fetch("PORT") { 3000 }
 #
 environment ENV['RAILS_ENV'] || "production"
 bind "unix://#{shared_dir}/sockets/puma.sock"
-stdout_redirect "#{shared_dir}/log/puma.stdout.log", "#{shared_dir}/log/puma.stderr.log", true
 # Specifies the `pidfile` that Puma will use.
 pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 state_path "#{shared_dir}/pids/puma.state"
