@@ -481,7 +481,7 @@ GEM
       coderay (~> 1.1)
       method_source (~> 1.0)
     public_suffix (4.0.6)
-    puma (4.3.10)
+    puma (4.3.11)
       nio4r (~> 2.0)
     racc (1.6.0)
     rack (2.2.3)
@@ -694,7 +694,7 @@ DEPENDENCIES
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
   popper_js
-  puma (~> 4.1)
+  puma (~> 4.3)
   rails (~> 6.0.3, >= 6.0.3.2)
   rails-controller-testing
   rmagick
