@@ -126,7 +126,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.1.9)
+    concurrent-ruby (1.1.10)
     connection_pool (2.2.5)
     crass (1.0.6)
     declarative (0.0.20)
@@ -337,7 +337,7 @@ GEM
       nokogiri (>= 1.5.11, < 2.0.0)
     formatador (0.3.0)
     gli (2.20.1)
-    globalid (1.0.0)
+    globalid (1.0.1)
       activesupport (>= 5.0)
     google-apis-compute_v1 (0.22.0)
       google-apis-core (>= 0.4, < 2.a)
@@ -389,7 +389,7 @@ GEM
     http-cookie (1.0.4)
       domain_name (~> 0.5)
     httpclient (2.8.3)
-    i18n (1.8.11)
+    i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.1)
       mini_magick (>= 4.9.5, < 5)
@@ -423,7 +423,7 @@ GEM
     mini_magick (4.11.0)
     mini_mime (1.1.2)
     mini_portile2 (2.6.1)
-    minitest (5.15.0)
+    minitest (5.17.0)
     minitest-reporters (1.4.3)
       ansi
       builder
@@ -623,7 +623,7 @@ GEM
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
-    tzinfo (1.2.9)
+    tzinfo (1.2.10)
       thread_safe (~> 0.1)
     uber (0.1.0)
     uglifier (4.2.0)
@@ -658,7 +658,7 @@ GEM
       webrick
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.5.3)
+    zeitwerk (2.6.6)
 
 PLATFORMS
   ruby
